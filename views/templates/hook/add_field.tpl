@@ -8,9 +8,7 @@
                     {foreach from=$languages item=language}
                         <div class="translation-field translation-label-{$language.iso_code}  translation-label-{$language.id_lang} 
                         {if $default_language == $language.id_lang}show active{/if}" data-locale="{$language.iso_code}">
-                            <input type="text" name="cstextfield_{$language.id_lang}" class="autoload_rte">
-                                {if isset({$cstextfield[$language.id_lang]}) && {$cstextfield[$language.id_lang]} != ''}{$cstextfield[$language.id_lang]}{/if}
-                            </textarea>
+                            <input type="text" name="cstextfield" >
                         </div>
                     {/foreach}
                     </div>

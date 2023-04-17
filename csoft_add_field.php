@@ -6,16 +6,18 @@ class Csoft_add_field extends Module
     {
         $this->name                   = 'csoft_add_field';
         $this->version                = '1.0.0';
-        $this->author                 = 'ComonSoft';
+        $this->author                 = 'prestaModuleT';
         $this->bootstrap              = true;
         $this->ps_versions_compliancy = array(
             'min' => '1.7.8',
         );
         parent::__construct();
-        $this->displayName      = $this->trans('Add wysiwyg field to product page', [], 'Modules.Csoftaddfield.Info');
-        $this->description      = $this->trans('Add a wysiwyg text field in product back-office and display  it in the product page', [], 'Modules.Csoftaddfield.Info');
+        $this->displayName      = $this->trans('price field', [], 'Modules.Csoftaddfield.Info');
+        $this->description      = $this->trans('add price field ', [], 'Modules.Csoftaddfield.Info');
+
         $this->confirmUninstall = $this->trans('Are you sure you want to uninstall?', [], 'Modules.Csoftaddfield.Info');
     }
+
 
     /**
      * Module install
@@ -81,6 +83,7 @@ class Csoft_add_field extends Module
                 'default_language' => $this->context->employee->id_lang,
             )
         );
+
         return $this->display(__FILE__, 'views/templates/hook/add_field.tpl');
     }
 
@@ -111,12 +114,17 @@ class Csoft_add_field extends Module
     /**
      * Hook for display in product page (front office)
      */
+
     public function hookDisplayProductExtraContent($params)
     {
-        $return = [];
-        $return[] = (new PrestaShop\PrestaShop\Core\Product\ProductExtraContent())
-            ->setTitle('my field')
-            ->setContent($params['product']->cstextfield);
-        return $return;
+        $product = $params['product'];
+
+        if (!empty($product->cstextfield)) {
+            $return = [];
+            $return[] = (new PrestaShop\PrestaShop\Core\Product\ProductExtraContent())
+                ->setTitle('on place price')
+                ->setContent($product->cstextfield);
+            return $return;
+        }
     }
 }
